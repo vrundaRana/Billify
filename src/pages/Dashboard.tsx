@@ -11,6 +11,7 @@ import {
   Sun
 } from 'lucide-react';
 import { useState } from 'react';
+import axios from 'axios';
 import CreateRecipte from '../components/CreateRecipte';
 import HomeDash from '../components/HomeDash';
 import Template from '../components/Template';
@@ -19,9 +20,22 @@ import Analytics from '../components/Analytics';
 import Customers from '../components/Customers';
 import Settings from '../components/Settings';
 
+const API = import.meta.env.VITE_API_URL;
+
 const Dashboard = () => {
   const [isDark, setIsDark] = useState(false);
   const [activeComponent, setActiveComponent] = useState('Dashboard');
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API}/api/auth/logout`, {}, {
+        withCredentials: true,
+      });
+      window.location.href = '/';
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  };
 
   const quickActions = [
     {
@@ -103,7 +117,9 @@ const Dashboard = () => {
         <div className={`p-4 space-y-2 border-t transition-colors duration-300 ${isDark ? 'border-gray-700' : 'border-gray-200'
           }`}>
 
-          <button className={`flex items-center justify-center md:justify-start w-full p-3 text-red-600 rounded-lg transition-all transform hover:scale-105 ${isDark ? 'hover:bg-red-900/20' : 'hover:bg-red-50'
+          <button 
+            onClick={handleLogout}
+            className={`flex items-center justify-center md:justify-start w-full p-3 text-red-600 rounded-lg transition-all transform hover:scale-105 cursor-pointer ${isDark ? 'hover:bg-red-900/20' : 'hover:bg-red-50'
             }`}>
             <LogOut size={20} className="mr-0 md:mr-3" />
             <span className="hidden md:inline">Logout</span>

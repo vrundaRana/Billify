@@ -12,7 +12,7 @@ const LoginSchema = z.object({
 });
 
 type LoginForm = z.infer<typeof LoginSchema>;
-
+const API=import.meta.env.VITE_API_URL
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [popup, setPopup] = useState<{ isVisible: boolean; type: 'success' | 'error'; message: string }>({ isVisible: false, type: 'success', message: '' });
@@ -26,21 +26,29 @@ const Login = () => {
 
   const onSubmit = async (data: LoginForm) => {
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login",{
+      const response = await axios.post(`${API}/api/auth/login`, {
         email: data.email,
         password: data.password
+      }, {
+        withCredentials: true
       });
       
-      localStorage.setItem('token', response.data.token);
-      setPopup({ isVisible: true, type: 'success', message: 'Login successful! Redirecting...' });
-      
-      setTimeout(() => {
-        window.location.href = '/dashboard';
-      }, 1500);
+      if (response.status === 200) {
+        setPopup({ isVisible: true, type: 'success', message: 'Login successful! Redirecting...' });
+        
+        setTimeout(() => {
+          window.location.href = '/dashboard';
+        }, 1500);
+      }
     } catch (error: unknown) {
+      console.error('Login error:', error);
       let errorMessage = 'Login failed. Please try again.';
-      if (axios.isAxiosError(error) && error.response?.data?.message) {
-        errorMessage = error.response.data.message;
+      if (axios.isAxiosError(error)) {
+        if (error.response?.data?.message) {
+          errorMessage = error.response.data.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
       }
       setPopup({ isVisible: true, type: 'error', message: errorMessage });
     }

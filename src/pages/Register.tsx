@@ -23,7 +23,7 @@ const registerSchema = z.object({
 });
 
 type RegisterForm = z.infer<typeof registerSchema>;
-
+const API=import.meta.env.VITE_API_URL
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -35,7 +35,7 @@ const Register = () => {
   const navigate = useNavigate();
   const onSubmit = async (data: RegisterForm) => {
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
+      await axios.post(`${API}/api/auth/register`, {
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,

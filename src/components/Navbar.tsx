@@ -1,6 +1,6 @@
 import { Menu, Receipt, LogOut } from "lucide-react";
 import { useState, useEffect, type FC } from "react";
-
+import axios from "axios";
 type NavItem = {
   name: string;
   path: string;
@@ -13,21 +13,38 @@ const navItems: NavItem[] = [
   { name: "Login", path: "/login" },
   { name: "Register", path: "/Register" },
 ];
-
+const API=import.meta.env.VITE_API_URL;
 const Navbar: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
+useEffect(() => {
+  const checkAuth = async () => {
+    try {
+      await axios.get(`${API}/api/auth/check`, {
+        withCredentials: true,
+      });
+      setIsAuthenticated(true);
+    } catch {
+      setIsAuthenticated(false);
+    }
+  };
 
-  const handleLogout = () => {
-    localStorage.removeItem('token');
+  checkAuth();
+}, []);
+
+const handleLogout = async () => {
+  try {
+    await axios.post(`${API}/api/auth/logout`, {}, {
+      withCredentials: true,
+    });
     setIsAuthenticated(false);
     window.location.href = '/';
-  };
+  } catch (err) {
+    console.error('Logout failed:', err);
+  }
+};
+
 
   return (
     <nav className="bg-[#BDB395] fixed w-full top-0 left-0 z-50 border-b-2 text-[#2b2822] font-['DynaPuff']">
@@ -55,7 +72,7 @@ const Navbar: FC = () => {
               <li className="relative cursor-pointer list-none m-2">
                 <button
                   onClick={handleLogout}
-                  className="transition-colors duration-300 hover:text-gray-600 flex items-center"
+                  className="text-red-600 transition-colors duration-300 hover:text-red-800 flex items-center cursor-pointer"
                 >
                   <LogOut size={16} className="mr-1" />
                   Logout
