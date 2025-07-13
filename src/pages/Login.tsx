@@ -31,7 +31,7 @@ const Login = () => {
         password: data.password
       });
       
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', response.data.accessToken);
       setPopup({ isVisible: true, type: 'success', message: 'Login successful! Redirecting...' });
       
       setTimeout(() => {
