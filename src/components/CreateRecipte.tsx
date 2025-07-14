@@ -25,7 +25,7 @@ interface Item {
 interface CreateReceiptProps {
   isDark?: boolean;
 }
-const API = import.meta.env.API_URL
+const  API=import.meta.env.VITE_API_URL;
 const CreateReceipt = ({ isDark = false }: CreateReceiptProps) => {
   const [customerName, setCustomerName] = useState<string>('');
   const [customerPhone, setCustomerPhone] = useState<string>('');

@@ -131,7 +131,7 @@ const Dashboard = () => {
         {activeComponent === 'Dashboard' && <HomeDash isDark={isDark} quickActions={quickActions} />}
         {activeComponent === 'Create Receipt' && <CreateRecipte isDark={isDark} />}
         {activeComponent === 'Templates' && <Template />}
-        {activeComponent === 'My Receipts' && <MyReceipt />}
+        {activeComponent === 'My Receipts' && <MyReceipt isDark={isDark} />}
         {activeComponent === 'Analytics' && <Analytics />}
         {activeComponent === 'Customers' && <Customers />}
         {activeComponent === 'Settings' && <Settings />}
