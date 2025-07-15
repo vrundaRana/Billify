@@ -10,7 +10,7 @@ import {
   Moon,
   Sun
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import CreateRecipte from '../components/CreateRecipte';
 import HomeDash from '../components/HomeDash';
@@ -25,6 +25,19 @@ const API = import.meta.env.VITE_API_URL;
 const Dashboard = () => {
   const [isDark, setIsDark] = useState(false);
   const [activeComponent, setActiveComponent] = useState('Dashboard');
+  const [dashboardStats, setDashboardStats] = useState<{ totalReceipts: number; totalRevenue: number; totalCustomers: number; receiptGrowth: string; revenueGrowth: string; newCustomersThisWeek: number; } | null>(null);
+useEffect(() => {
+  const fetchDashboardStats = async () => {
+    try {
+      const res = await axios.get(`${API}/api/analytics/basicAnalytics`, { withCredentials: true });
+      setDashboardStats(res.data);
+    } catch (err) {
+      console.error('Failed to fetch dashboard stats:', err);
+    }
+  };
+
+  fetchDashboardStats();
+}, []);
 
   const handleLogout = async () => {
     try {
@@ -128,13 +141,13 @@ const Dashboard = () => {
       </aside>
 
       <div className="flex flex-col flex-1  mt-20">
-        {activeComponent === 'Dashboard' && <HomeDash isDark={isDark} quickActions={quickActions} />}
+        {activeComponent === 'Dashboard' && <HomeDash isDark={isDark} quickActions={quickActions} dashboardStats={dashboardStats} />}
         {activeComponent === 'Create Receipt' && <CreateRecipte isDark={isDark} />}
-        {activeComponent === 'Templates' && <Template />}
+        {activeComponent === 'Templates' && <Template isDark={isDark} />}
         {activeComponent === 'My Receipts' && <MyReceipt isDark={isDark} />}
         {activeComponent === 'Analytics' && <Analytics />}
         {activeComponent === 'Customers' && <Customers />}
-        {activeComponent === 'Settings' && <Settings />}
+        {activeComponent === 'Settings' && <Settings isDark={isDark} />}
       </div>
     </div>
   );
