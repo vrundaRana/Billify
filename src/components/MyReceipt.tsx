@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Receipt, Calendar, Phone, User, Package, DollarSign, Search } from 'lucide-react';
+import { Receipt, Calendar, Phone, User, Package, DollarSign, Search, Download } from 'lucide-react';
 import axios from 'axios';
+import { pdf } from '@react-pdf/renderer';
 import Popup from './Popup';
+import Template1 from '../templates/Template1';
+import Template2 from '../templates/Template2';
+import Template3 from '../templates/Template3';
+import Template4 from '../templates/Template4';
+import { formatReceiptData } from '../utils/businessInfo';
 
 interface ReceiptItem {
   name: string;
@@ -18,6 +24,7 @@ interface ReceiptData {
   receiptNumber: string;
   issuedAt: string;
   createdAt: string;
+  templateId?: number;
 }
 
 interface MyReceiptProps {
@@ -63,6 +70,35 @@ const MyReceipt = ({ isDark = false }: MyReceiptProps) => {
       hour: '2-digit',
       minute: '2-digit'
     });
+  };
+  
+  const getTemplateComponent = (templateId: number = 1) => {
+    switch (templateId) {
+      case 1: return Template1;
+      case 2: return Template2;
+      case 3: return Template3;
+      case 4: return Template4;
+      default: return Template1;
+    }
+  };
+  
+  const handleDownloadPDF = async (receipt: ReceiptData) => {
+    try {
+      const TemplateComponent = getTemplateComponent(receipt.templateId);
+      const pdfData = formatReceiptData(receipt);
+      
+      const blob = await pdf(<TemplateComponent data={pdfData} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `receipt-${receipt.receiptNumber}.pdf`;
+      link.click();
+      URL.revokeObjectURL(url);
+      
+      showPopup('Receipt downloaded successfully!', 'success');
+    } catch (error) {
+      showPopup('Failed to download receipt', 'error');
+    }
   };
 
   if (loading) {
@@ -207,6 +243,16 @@ const MyReceipt = ({ isDark = false }: MyReceiptProps) => {
                     }`}>
                     ₹{receipt.totalAmount}
                   </span>
+                  <button 
+                    onClick={() => handleDownloadPDF(receipt)}
+                    className={`px-4 py-2 rounded-lg font-semibold transition-all cursor-pointer flex items-center gap-2 ${isDark
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                      : 'bg-blue-100 hover:bg-blue-200 text-blue-800'
+                      }`}
+                  >
+                    <Download size={16}/>
+                    Download
+                  </button>
                 </div>
               </div>
             </div>

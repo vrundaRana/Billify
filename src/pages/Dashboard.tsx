@@ -11,6 +11,7 @@ import {
   Sun
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import axios from 'axios';
 import CreateRecipte from '../components/CreateRecipte';
 import HomeDash from '../components/HomeDash';
@@ -23,21 +24,29 @@ import Settings from '../components/Settings';
 const API = import.meta.env.VITE_API_URL;
 
 const Dashboard = () => {
+  const [searchParams] = useSearchParams();
   const [isDark, setIsDark] = useState(false);
   const [activeComponent, setActiveComponent] = useState('Dashboard');
   const [dashboardStats, setDashboardStats] = useState<{ totalReceipts: number; totalRevenue: number; totalCustomers: number; receiptGrowth: string; revenueGrowth: string; newCustomersThisWeek: number; } | null>(null);
-useEffect(() => {
-  const fetchDashboardStats = async () => {
-    try {
-      const res = await axios.get(`${API}/api/analytics/basicAnalytics`, { withCredentials: true });
-      setDashboardStats(res.data);
-    } catch (err) {
-      console.error('Failed to fetch dashboard stats:', err);
+  
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === 'create') {
+      setActiveComponent('Create Receipt');
     }
-  };
+  }, [searchParams]);
+  useEffect(() => {
+    const fetchDashboardStats = async () => {
+      try {
+        const res = await axios.get(`${API}/api/analytics/basicAnalytics`, { withCredentials: true });
+        setDashboardStats(res.data);
+      } catch (err) {
+        console.error('Failed to fetch dashboard stats:', err);
+      }
+    };
 
-  fetchDashboardStats();
-}, []);
+    fetchDashboardStats();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -122,7 +131,7 @@ useEffect(() => {
                 : 'text-gray-600 hover:bg-gray-100'
               }`}
           >
-            {isDark ? <Sun size={20} className="mr-0 md:mr-3" /> : <Moon size={20} className="mr-0 md:mr-3" />}
+            {isDark ? <Sun size={24} className="mr-0 md:mr-3" /> : <Moon size={24} className="mr-0 md:mr-3" />}
             <span className="hidden md:inline">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
           </button>
         </nav>
@@ -134,7 +143,7 @@ useEffect(() => {
             onClick={handleLogout}
             className={`flex items-center justify-center md:justify-start w-full p-3 text-red-600 rounded-lg transition-all transform hover:scale-105 cursor-pointer ${isDark ? 'hover:bg-red-900/20' : 'hover:bg-red-50'
             }`}>
-            <LogOut size={20} className="mr-0 md:mr-3" />
+            <LogOut size={24} className="mr-0 md:mr-3" />
             <span className="hidden md:inline">Logout</span>
           </button>
         </div>

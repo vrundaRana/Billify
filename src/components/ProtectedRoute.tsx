@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     const checkAuth = async () => {
       try {
         await axios.get(`${API}/api/auth/check`, {
-          withCredentials: true, // ✅ Sends the cookie with the request
+          withCredentials: true, 
         });
         setIsAuthenticated(true);
       } catch (error) {
