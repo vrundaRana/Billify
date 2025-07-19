@@ -1,4 +1,5 @@
-// Template2.js
+// Template2.tsx
+import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -75,7 +76,7 @@ interface Template2Props {
   };
 }
 
-const Template2 = ({ data }: Template2Props) => (
+const Template2: React.FC<Template2Props> = ({ data }) => (
   <Document>
     <Page style={styles.page}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

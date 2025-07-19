@@ -72,32 +72,56 @@ const MyReceipt = ({ isDark = false }: MyReceiptProps) => {
     });
   };
   
-  const getTemplateComponent = (templateId: number = 1) => {
-    switch (templateId) {
-      case 1: return Template1;
-      case 2: return Template2;
-      case 3: return Template3;
-      case 4: return Template4;
-      default: return Template1;
-    }
-  };
-  
   const handleDownloadPDF = async (receipt: ReceiptData) => {
     try {
-      const TemplateComponent = getTemplateComponent(receipt.templateId);
+      // Default to template 1 if templateId is undefined
+      const templateId = receipt.templateId || 1;
+      
+      // Format receipt data for PDF
       const pdfData = formatReceiptData(receipt);
       
-      const blob = await pdf(<TemplateComponent data={pdfData} />).toBlob();
+      // Generate PDF blob based on template ID
+      showPopup('Generating PDF...', 'success');
+      let pdfDoc;
+      
+      switch(templateId) {
+        case 1:
+          pdfDoc = <Template1 data={pdfData} />;
+          break;
+        case 2:
+          pdfDoc = <Template2 data={pdfData} />;
+          break;
+        case 3:
+          pdfDoc = <Template3 data={pdfData} />;
+          break;
+        case 4:
+          pdfDoc = <Template4 data={pdfData} />;
+          break;
+        default:
+          pdfDoc = <Template1 data={pdfData} />;
+      }
+      
+      const blob = await pdf(pdfDoc).toBlob();
+      
+      // Create download link
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
       link.download = `receipt-${receipt.receiptNumber}.pdf`;
-      link.click();
-      URL.revokeObjectURL(url);
       
-      showPopup('Receipt downloaded successfully!', 'success');
+      // Trigger download
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      // Clean up
+      setTimeout(() => {
+        URL.revokeObjectURL(url);
+        showPopup('Receipt downloaded successfully!', 'success');
+      }, 100);
     } catch (error) {
-      showPopup('Failed to download receipt', 'error');
+      console.error('PDF download error:', error);
+      showPopup(`Failed to download receipt: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error');
     }
   };
 

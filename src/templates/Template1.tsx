@@ -1,3 +1,4 @@
+import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -106,7 +107,7 @@ interface Template1Props {
   };
 }
 
-const Template1 = ({ data }: Template1Props) => (
+const Template1: React.FC<Template1Props> = ({ data }) => (
   <Document>
     <Page style={styles.page}>
 

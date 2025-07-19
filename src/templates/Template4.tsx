@@ -1,5 +1,6 @@
-// Template4.js
-import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
+// Template4.tsx
+import React from 'react';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
   page: {
@@ -76,7 +77,7 @@ interface Template4Props {
   };
 }
 
-const Template4 = ({ data }: Template4Props) => (
+const Template4: React.FC<Template4Props> = ({ data }) => (
   <Document>
     <Page style={styles.page}>
       <Text style={styles.header}>INVOICE</Text>

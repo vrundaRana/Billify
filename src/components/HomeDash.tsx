@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, BarChart3, Star, Users, Clock } from 'lucide-react';
+import { TrendingUp, FileText, BarChart3, Star, Users } from 'lucide-react';
 
 interface HomeDashProps {
   isDark: boolean;
@@ -80,48 +80,8 @@ const HomeDash = ({ isDark, quickActions, dashboardStats }: HomeDashProps) => {
         </div>
       </section>
 
-      <section className="mb-8">
-        <h2 className={`text-2xl font-bold mb-6 ${isDark ? 'text-white' : 'text-gray-900'
-          }`}>Quick Actions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {quickActions.map((action, index) => (
-            <div key={index} className={`bg-gradient-to-br ${action.color} text-white rounded-xl shadow-lg p-6 transform hover:scale-105 transition-all cursor-pointer`}>
-              <div className="flex flex-col items-center text-center">
-                {action.icon}
-                <h3 className="text-lg font-bold mt-3 mb-2">{action.title}</h3>
-                <p className="text-sm opacity-90 mb-4">{action.description}</p>
-                <button
-                  className="bg-white bg-opacity-20 hover:bg-opacity-30 px-6 py-2 rounded-lg transition font-semibold text-black cursor-pointer"
-                >
-                  {action.action}
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
-      <section className={`rounded-xl shadow-lg border transition-colors duration-300 ${isDark
-        ? 'bg-gray-800 border-gray-700'
-        : 'bg-white border-gray-100'
-        }`}>
-        <div className={`px-6 py-4 border-b transition-colors duration-300 ${isDark ? 'border-gray-700' : 'border-gray-100'
-          }`}>
-          <div className="flex items-center">
-            <Clock size={20} className={`mr-2 ${isDark ? 'text-gray-400' : 'text-gray-600'}`} />
-            <h2 className={`text-xl font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Recent Activity</h2>
-          </div>
-        </div>
-        <div className="p-6">
-          <div className="text-center py-12">
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${isDark ? 'bg-gray-700' : 'bg-gray-100'}`}>
-              <Clock size={24} className={`${isDark ? 'text-gray-500' : 'text-gray-400'}`} />
-            </div>
-            <p className={`text-lg ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>No recent activity to show</p>
-            <p className={`text-sm mt-2 ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>Your recent receipts and actions will appear here</p>
-          </div>
-        </div>
-      </section>
+
     </main>
   )
 }

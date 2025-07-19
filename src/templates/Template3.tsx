@@ -1,4 +1,5 @@
-// Template3.js
+// Template3.tsx
+import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
@@ -75,7 +76,7 @@ interface Template3Props {
   };
 }
 
-const Template3 = ({ data }: Template3Props) => (
+const Template3: React.FC<Template3Props> = ({ data }) => (
   <Document>
     <Page style={styles.page}>
       {data.logoUrl && <Image style={styles.logo} src={data.logoUrl} />}
