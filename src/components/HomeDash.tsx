@@ -19,7 +19,7 @@ interface HomeDashProps {
   } | null
 }
 
-const HomeDash = ({ isDark, quickActions, dashboardStats }: HomeDashProps) => {
+const HomeDash = ({ isDark, dashboardStats }: HomeDashProps) => {
   return (
     <main className="p-6">
       <section className="mb-8">

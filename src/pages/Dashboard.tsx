@@ -1,10 +1,8 @@
 import {
   Plus,
   FileText,
-  Settings as SettingsIcon,
   Home,
   BarChart3,
-  Users,
   LogOut,
   Layout,
   Moon,
