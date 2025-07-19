@@ -17,9 +17,7 @@ import CreateRecipte from '../components/CreateRecipte';
 import HomeDash from '../components/HomeDash';
 import Template from '../components/Template';
 import MyReceipt from '../components/MyReceipt';
-import Analytics from '../components/Analytics';
-import Customers from '../components/Customers';
-import Settings from '../components/Settings';
+
 
 const API = import.meta.env.VITE_API_URL;
 
@@ -104,9 +102,6 @@ const Dashboard = () => {
             { name: 'Create Receipt', icon: <Plus size={20} /> },
             { name: 'Templates', icon: <Layout size={20} /> },
             { name: 'My Receipts', icon: <FileText size={20} /> },
-            { name: 'Analytics', icon: <BarChart3 size={20} /> },
-            { name: 'Customers', icon: <Users size={20} /> },
-            { name: 'Settings', icon: <SettingsIcon size={20} /> },
           ].map(({ name, icon }) => (
             <button
               key={name}
@@ -154,9 +149,6 @@ const Dashboard = () => {
         {activeComponent === 'Create Receipt' && <CreateRecipte isDark={isDark} />}
         {activeComponent === 'Templates' && <Template isDark={isDark} />}
         {activeComponent === 'My Receipts' && <MyReceipt isDark={isDark} />}
-        {activeComponent === 'Analytics' && <Analytics />}
-        {activeComponent === 'Customers' && <Customers />}
-        {activeComponent === 'Settings' && <Settings isDark={isDark} />}
       </div>
     </div>
   );
