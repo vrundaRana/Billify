@@ -5,7 +5,7 @@ import { Eye, EyeOff, User, Mail, Lock, Building, Receipt } from "lucide-react";
 import { useState } from "react";
 import Popup from "../components/Popup";
 import axios from "axios";
-import { useNavigate } from "react-router";
+import { useNavigate, Link } from "react-router";
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name must be at least 2 characters"),
   lastName: z.string().min(2, "Last name must be at least 2 characters"),
@@ -185,8 +185,8 @@ const Register = () => {
               className="mt-1 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-500 rounded"
             />
             <label className="ml-2 text-sm text-gray-600">
-              I agree to the <a href="/terms" className="text-blue-600 hover:underline">Terms of Service</a> and{" "}
-              <a href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</a>
+              I agree to the <Link to="/terms" className="text-blue-600 hover:underline">Terms of Service</Link> and{" "}
+              <Link to="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>
             </label>
           </div>
           {errors.terms && <p className="text-red-500 text-sm mt-1">{errors.terms.message}</p>}
@@ -203,9 +203,9 @@ const Register = () => {
 
         <p className="text-center text-gray-600 mt-6">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600 hover:underline font-semibold">
+          <Link to="/login" className="text-blue-600 hover:underline font-semibold">
             Sign in
-          </a>
+          </Link>
         </p>
       </div>
 

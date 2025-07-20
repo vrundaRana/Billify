@@ -1,4 +1,5 @@
 import { FileText, Store, Coffee, Wrench, Heart, Briefcase, Eye, Download, Star } from 'lucide-react';
+import { Link } from 'react-router';
 
 const Templates = () => {
   const templates = [
@@ -223,18 +224,18 @@ const Templates = () => {
             Choose your favorite template and customize it to match your brand in minutes
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-lg"
             >
               Get Started Free
-            </a>
-            <a
-              href="/features"
+            </Link>
+            <Link
+              to="/features"
               className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold px-10 py-4 rounded-lg transition-all text-lg"
             >
               View Features
-            </a>
+            </Link>
           </div>
         </div>
       </section>

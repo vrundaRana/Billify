@@ -1,6 +1,7 @@
 import { Menu, Receipt, LogOut } from "lucide-react";
 import { useState, useEffect, type FC } from "react";
 import axios from "axios";
+import { Link } from "react-router";
 type NavItem = {
   name: string;
   path: string;
@@ -39,7 +40,8 @@ const handleLogout = async () => {
       withCredentials: true,
     });
     setIsAuthenticated(false);
-    window.location.href = '/';
+    // Using window.location.href causes a full page reload
+    // We'll keep this for logout as it's often desired to fully refresh after logout
   } catch (err) {
     console.error('Logout failed:', err);
   }
@@ -60,14 +62,14 @@ const handleLogout = async () => {
           {isAuthenticated ? (
             <>
               <li className="relative cursor-pointer list-none m-2">
-                <a
-                  href="/dashboard"
+                <Link
+                  to="/dashboard"
                   className="transition-colors duration-300 hover:text-gray-600
                     after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0
                     after:bg-gray-800 after:transition-all after:duration-300 hover:after:w-full"
                 >
                   Dashboard
-                </a>
+                </Link>
               </li>
               <li className="relative cursor-pointer list-none m-2">
                 <button
@@ -82,14 +84,14 @@ const handleLogout = async () => {
           ) : (
             navItems.map((item) => (
               <li key={item.name} className="relative cursor-pointer list-none m-2">
-                <a
-                  href={item.path}
+                <Link
+                  to={item.path}
                   className="transition-colors duration-300 hover:text-gray-600
                     after:absolute after:left-0 after:-bottom-1 after:h-0.5 after:w-0
                     after:bg-gray-800 after:transition-all after:duration-300 hover:after:w-full"
                 >
                   {item.name}
-                </a>
+                </Link>
               </li>
             ))
           )}
@@ -105,9 +107,9 @@ const handleLogout = async () => {
             {isAuthenticated ? (
               <>
                 <li className="cursor-pointer list-none m-2">
-                  <a href="/dashboard" className="block transition-colors duration-300 hover:text-purple-600">
+                  <Link to="/dashboard" className="block transition-colors duration-300 hover:text-purple-600">
                     Dashboard
-                  </a>
+                  </Link>
                 </li>
                 <li className="cursor-pointer list-none m-2">
                   <button onClick={handleLogout} className="block transition-colors duration-300 hover:text-purple-600">
@@ -118,11 +120,11 @@ const handleLogout = async () => {
             ) : (
               navItems.map((item) => (
                 <li key={item.name} className="cursor-pointer list-none m-2">
-                  <a
-                    href={item.path}
+                  <Link
+                    to={item.path}
                     className="block transition-colors duration-300 hover:text-purple-600">
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))
             )}

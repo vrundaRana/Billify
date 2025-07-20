@@ -1,4 +1,5 @@
 import { Crown, FileText, ShieldCheck, Zap } from "lucide-react";
+import { Link } from "react-router";
 
 
 const Home = () => {
@@ -13,18 +14,18 @@ const Home = () => {
           Create professional-looking receipts in seconds. No design skills needed. Just register your business, choose a template, and print.
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <a
-            href="/register"
+          <Link
+            to="/register"
             className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             Start for Free
-          </a>
-          <a
-            href="/features"
+          </Link>
+          <Link
+            to="/features"
             className="bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold px-8 py-4 rounded-lg shadow-md hover:shadow-lg transition-all"
           >
             View Features
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -137,18 +138,18 @@ const Home = () => {
             Join thousands of businesses already using Billify to create professional receipts effortlessly.
           </p>
           <div className="flex justify-center gap-6 flex-wrap">
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-10 py-4 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 text-lg"
             >
               Get Started Free
-            </a>
-            <a
-              href="/features"
+            </Link>
+            <Link
+              to="/features"
               className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold px-10 py-4 rounded-lg transition-all text-lg"
             >
               Learn More
-            </a>
+            </Link>
           </div>
           <p className="mt-8 text-sm opacity-75">
             No credit card required • 50 free receipts • Cancel anytime

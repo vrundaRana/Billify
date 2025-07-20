@@ -1,4 +1,5 @@
 import { Receipt, Mail, Phone, Github, Twitter, Linkedin } from "lucide-react";
+// No need to import Link since we're using external links
 
 const Footer = () => {
   return (
